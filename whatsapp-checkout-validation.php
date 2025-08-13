@@ -102,16 +102,10 @@ function wcv_init_auto_updater() {
 
 	// Carrega a lib somente se ainda não tiver sido carregada por outro plugin
 	if ( ! class_exists( 'YahnisElsts\\PluginUpdateChecker\\v5\\PucFactory' ) ) {
-		// Primeiro tenta na própria pasta deste plugin
+		// Usa a cópia local
 		$local_lib = WCV_PLUGIN_DIR . 'lib/plugin-update-checker/plugin-update-checker.php';
 		if ( file_exists( $local_lib ) ) {
 			require_once $local_lib;
-		} else {
-			// Como fallback, tenta usar a cópia do outro plugin se existir
-			$other = WP_PLUGIN_DIR . '/wp-whatsevolution/lib/plugin-update-checker/plugin-update-checker.php';
-			if ( file_exists( $other ) ) {
-				require_once $other;
-			}
 		}
 	}
 
@@ -121,6 +115,10 @@ function wcv_init_auto_updater() {
 			__FILE__,
 			'whatsapp-checkout-validation'
 		);
+		// Define a branch padrão utilizada para releases
+		if ( method_exists( $updateChecker, 'setBranch' ) ) {
+			$updateChecker->setBranch( 'main' );
+		}
 
 		// Opcional: checagem manual via hook admin
 		// add_action( 'admin_init', function() use ( $updateChecker ) { $updateChecker->checkForUpdates(); } );
