@@ -31,6 +31,22 @@ class WCV_Admin_Settings {
     private function __construct() {
         add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
         add_action( 'admin_init', array( $this, 'register_settings' ) );
+        add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+    }
+
+    /**
+     * Admin CSS for CTA and layout
+     */
+    public function enqueue_admin_assets( $hook ) {
+        if ( strpos( $hook, 'whatsapp-checkout-validation' ) === false ) {
+            return;
+        }
+        wp_enqueue_style(
+            'wcv-admin',
+            WCV_PLUGIN_URL . 'assets/css/admin.css',
+            array(),
+            WCV_PLUGIN_VERSION
+        );
     }
 
     /**
@@ -234,20 +250,20 @@ class WCV_Admin_Settings {
         ?>
         <div class="wrap">
             <h1><?php esc_html_e( 'Configurações de Validação de WhatsApp no Checkout', 'whatsapp-checkout-validation' ); ?></h1>
-            <div style="border:1px solid #16a34a; background:#f0fff4; padding:20px; border-radius:10px; box-shadow:0 6px 16px rgba(0,128,0,0.08); display:flex; align-items:center; justify-content:space-between; gap:24px;">
-                <div style="display:flex; align-items:flex-start; gap:14px;">
-                    <div style="font-size:28px; line-height:1; color:#e11d48;">❌</div>
-                    <div>
-                        <h3 style="margin:0 0 8px; font-size:18px; color:#0f172a;">Não tem uma API Evolution?</h3>
-                        <p style="margin:0; color:#0f172a; opacity:.9;">
-                            <span style="margin-right:8px;">🎯</span>Envie mensagens automatizadas para seus clientes em minutos!<br/>
-                            <span style="margin-right:8px;">✨</span>Ative sua instância agora e aproveite todos os recursos premium do Whats Evolution.<br/>
-                            <span style="margin-right:8px;">💡</span><strong>Dica:</strong> Use a aba "🚀 Teste Grátis" para configuração automática em 1-click!
-                        </p>
-                    </div>
+            <div class="wpwevo-cta-box">
+                <div class="wpwevo-cta-content">
+                    <h3 class="wpwevo-cta-title">
+                        <span class="wpwevo-cta-emoji">❌</span> Não tem uma API Evolution?
+                    </h3>
+                    <p class="wpwevo-cta-description">
+                        <span class="wpwevo-cta-emoji">🎯</span> Envie mensagens automatizadas para seus clientes em minutos!<br>
+                        <span class="wpwevo-cta-emoji">✨</span> Ative sua instância agora e aproveite todos os recursos premium do Whats Evolution.<br>
+                        <span class="wpwevo-cta-emoji">💡</span> <strong>Dica:</strong> Use a aba "🚀 Teste Grátis" para configuração automática em 1-click!
+                    </p>
                 </div>
-                <a href="https://whats-evolution.vercel.app/" target="_blank" rel="noopener noreferrer" style="background:#16a34a; color:#fff; border-radius:8px; padding:12px 18px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow:0 8px 20px rgba(16,185,129,.25);">
-                    <span>🚀</span> <strong>Teste Grátis Agora Mesmo!</strong>
+                <a href="https://whats-evolution.vercel.app/"
+                   class="wpwevo-cta-button" target="_blank" rel="noopener noreferrer">
+                    <span class="wpwevo-cta-emoji">🚀</span> Teste Grátis Agora Mesmo!
                 </a>
             </div>
             <form action="options.php" method="post">
