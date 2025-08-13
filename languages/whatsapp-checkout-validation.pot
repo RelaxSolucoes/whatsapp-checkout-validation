@@ -1,0 +1,182 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: whatsapp-checkout-validation 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-13 00:00+0000\n"
+"PO-Revision-Date: 2025-08-13 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: manual\n"
+"X-Domain: whatsapp-checkout-validation\n"
+
+#: whatsapp-checkout-validation.php:80
+msgid "Configurações"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Verificando número..."
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Número de telefone incompleto"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "✓ Número de WhatsApp válido"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "⚠ Este número não possui WhatsApp"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Não foi possível verificar o número"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Erro na verificação. Tente novamente."
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Atenção!"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Prosseguir sem WhatsApp"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Nome"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Número de telefone não fornecido"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "API não configurada corretamente"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Instância não configurada corretamente"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Erro ao conectar com a API"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "API retornou status %d"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Resposta inválida da API (JSON)"
+msgstr ""
+
+#: includes/class-wcv-validator.php
+msgid "Resposta inesperada da API"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Validação de WhatsApp no Checkout - Configurações"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Não possui Evolution API?"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Conheça nossa solução completa de automação WhatsApp para WooCommerce."
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Conexão"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Configuração"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Configuração da Evolution API"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "URL da API"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "API Key"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Nome da Instância"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "URL completa onde a Evolution API está instalada"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Chave de API gerada nas configurações da Evolution API"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Nome da instância criada na Evolution API"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Salvar Configurações"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Testar Conexão"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Conexão ativa com a Evolution API."
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Instância encontrada, porém desconectada."
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Não foi possível validar a conexão."
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Personalização da Validação"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Ativar validação no checkout"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Exibir modal de confirmação"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Mensagem de sucesso"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Mensagem de erro"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Título do modal"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Texto do botão do modal"
+msgstr ""
+
+#: includes/admin/class-wcv-admin-settings.php
+msgid "Salvar Personalizações"
+msgstr ""
+

@@ -1,0 +1,135 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: whatsapp-checkout-validation 1.0.0\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Domain: whatsapp-checkout-validation\n"
+
+msgid "Configurações"
+msgstr "Configurações"
+
+msgid "Verificando número..."
+msgstr "Verificando número..."
+
+msgid "Número de telefone incompleto"
+msgstr "Número de telefone incompleto"
+
+msgid "✓ Número de WhatsApp válido"
+msgstr "✓ Número de WhatsApp válido"
+
+msgid "⚠ Este número não possui WhatsApp"
+msgstr "⚠ Este número não possui WhatsApp"
+
+msgid "Não foi possível verificar o número"
+msgstr "Não foi possível verificar o número"
+
+msgid "Erro na verificação. Tente novamente."
+msgstr "Erro na verificação. Tente novamente."
+
+msgid "Atenção!"
+msgstr "Atenção!"
+
+msgid "Prosseguir sem WhatsApp"
+msgstr "Prosseguir sem WhatsApp"
+
+msgid "Nome"
+msgstr "Nome"
+
+msgid "Número de telefone não fornecido"
+msgstr "Número de telefone não fornecido"
+
+msgid "API não configurada corretamente"
+msgstr "API não configurada corretamente"
+
+msgid "Instância não configurada corretamente"
+msgstr "Instância não configurada corretamente"
+
+msgid "Erro ao conectar com a API"
+msgstr "Erro ao conectar com a API"
+
+msgid "API retornou status %d"
+msgstr "API retornou status %d"
+
+msgid "Resposta inválida da API (JSON)"
+msgstr "Resposta inválida da API (JSON)"
+
+msgid "Resposta inesperada da API"
+msgstr "Resposta inesperada da API"
+
+msgid "Validação de WhatsApp no Checkout - Configurações"
+msgstr "Validação de WhatsApp no Checkout - Configurações"
+
+msgid "Não possui Evolution API?"
+msgstr "Não possui Evolution API?"
+
+msgid "Conheça nossa solução completa de automação WhatsApp para WooCommerce."
+msgstr "Conheça nossa solução completa de automação WhatsApp para WooCommerce."
+
+msgid "Conexão"
+msgstr "Conexão"
+
+msgid "Configuração"
+msgstr "Configuração"
+
+msgid "Configuração da Evolution API"
+msgstr "Configuração da Evolution API"
+
+msgid "URL da API"
+msgstr "URL da API"
+
+msgid "API Key"
+msgstr "Chave da API"
+
+msgid "Nome da Instância"
+msgstr "Nome da Instância"
+
+msgid "URL completa onde a Evolution API está instalada"
+msgstr "URL completa onde a Evolution API está instalada"
+
+msgid "Chave de API gerada nas configurações da Evolution API"
+msgstr "Chave de API gerada nas configurações da Evolution API"
+
+msgid "Nome da instância criada na Evolution API"
+msgstr "Nome da instância criada na Evolution API"
+
+msgid "Salvar Configurações"
+msgstr "Salvar Configurações"
+
+msgid "Testar Conexão"
+msgstr "Testar Conexão"
+
+msgid "Conexão ativa com a Evolution API."
+msgstr "Conexão ativa com a Evolution API."
+
+msgid "Instância encontrada, porém desconectada."
+msgstr "Instância encontrada, porém desconectada."
+
+msgid "Não foi possível validar a conexão."
+msgstr "Não foi possível validar a conexão."
+
+msgid "Personalização da Validação"
+msgstr "Personalização da Validação"
+
+msgid "Ativar validação no checkout"
+msgstr "Ativar validação no checkout"
+
+msgid "Exibir modal de confirmação"
+msgstr "Exibir modal de confirmação"
+
+msgid "Mensagem de sucesso"
+msgstr "Mensagem de sucesso"
+
+msgid "Mensagem de erro"
+msgstr "Mensagem de erro"
+
+msgid "Título do modal"
+msgstr "Título do modal"
+
+msgid "Texto do botão do modal"
+msgstr "Texto do botão do modal"
+
+msgid "Salvar Personalizações"
+msgstr "Salvar Personalizações"
+
