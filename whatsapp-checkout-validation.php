@@ -3,7 +3,7 @@
  * Plugin Name: WP Checkout Validation
  * Plugin URI: https://github.com/RelaxSolucoes/whatsapp-checkout-validation
  * Description: Verifica em tempo real se o número de telefone no checkout possui WhatsApp.
- * Version: 1.1.0
+ * Version: 1.0.0
  * Author: Relax Soluções
  * Author URI: https://relaxsolucoes.online/
  * Requires at least: 5.6
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 // Versão do plugin
 if ( ! defined( 'WCV_PLUGIN_VERSION' ) ) {
-    define( 'WCV_PLUGIN_VERSION', '1.1.0' );
+    define( 'WCV_PLUGIN_VERSION', '1.0.0' );
 }
 // Diretório do plugin
 if ( ! defined( 'WCV_PLUGIN_DIR' ) ) {

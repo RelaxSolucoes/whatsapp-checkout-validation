@@ -4,7 +4,7 @@ Tags: whatsapp, checkout, woocommerce, validation
 Requires at least: 5.6
 Tested up to: 6.5
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -26,15 +26,9 @@ Este plugin verifica, via API Evolution, se o número informado no checkout é W
 3. Acesse Configurações → Validação WhatsApp e informe URL, chave da API e instância.
 
 == Changelog ==
-= 1.1.0 =
-* Melhoria: CSS dedicado e i18n no JS
-* Melhoria: Prefixo internacional configurável
-* Melhoria: Cache com transients e filtros de extensão (`wcv_*`)
-* Melhoria: link de Configurações na lista de plugins
-
-= 1.0.1 =
-* Correções menores
-
 = 1.0.0 =
-* Versão inicial
+* MVP funcional: validação de WhatsApp no checkout com AJAX
+* Admin com abas: Conexão e Configuração
+* Testar Conexão, cache com transients e filtros `wcv_*`
+* HPOS/Blocks compat, auto-update via GitHub, CTA padrão
 
