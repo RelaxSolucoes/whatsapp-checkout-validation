@@ -258,7 +258,7 @@ class WCV_Admin_Settings {
                     <p class="wpwevo-cta-description">
                         <span class="wpwevo-cta-emoji">🎯</span> Envie mensagens automatizadas para seus clientes em minutos!<br>
                         <span class="wpwevo-cta-emoji">✨</span> Ative sua instância agora e aproveite todos os recursos premium do Whats Evolution.<br>
-                        <span class="wpwevo-cta-emoji">💡</span> <strong>Dica:</strong> Use a aba "🚀 Teste Grátis" para configuração automática em 1-click!
+                        <span class="wpwevo-cta-emoji">🧭</span> Clique em <strong>"🚀 Teste Grátis Agora Mesmo!"</strong>, crie sua conta e receba a <strong>URL da API</strong>, <strong>Chave da API</strong> e <strong>Nome da Instância</strong>. Depois, cole nas configurações deste plugin e teste grátis por <strong>7 dias</strong>.
                     </p>
                 </div>
                 <a href="https://whats-evolution.vercel.app/"
