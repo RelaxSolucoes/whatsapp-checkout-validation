@@ -248,8 +248,8 @@ class WCV_Admin_Settings {
      */
     public function settings_page() {
         ?>
-        <div class="wrap">
-            <h1><?php esc_html_e( 'Configurações de Validação de WhatsApp no Checkout', 'whatsapp-checkout-validation' ); ?></h1>
+        <div class="wrap wpwevo-panel" style="max-width: none;">
+            <h1>⚙️ <?php esc_html_e( 'Validação de WhatsApp no Checkout - Configurações', 'whatsapp-checkout-validation' ); ?></h1>
             <div class="wpwevo-cta-box">
                 <div class="wpwevo-cta-content">
                     <h3 class="wpwevo-cta-title">
