@@ -1,0 +1,13 @@
+.wcv-validation{margin-top:5px}
+.wcv-text{font-size:.95em}
+.wcv-text--success{color:#2e7d32}
+.wcv-text--warning{color:#ed6c02}
+.wcv-text--error{color:#d32f2f}
+.wcv-modal{position:fixed;z-index:9999;left:0;top:0;width:100%;height:100%;background-color:rgba(0,0,0,.7);overflow:auto}
+.wcv-modal__dialog{position:relative;background-color:#fff;margin:10% auto;padding:20px;border-radius:6px;width:90%;max-width:520px;box-shadow:0 10px 30px rgba(0,0,0,.2)}
+.wcv-modal__close{position:absolute;right:15px;top:10px;font-size:22px;cursor:pointer}
+.wcv-modal__title{margin:0 0 10px;color:#333}
+.wcv-modal__actions{text-align:right;margin-top:20px}
+.wcv-btn{display:inline-block;border:0;border-radius:4px;padding:8px 14px;cursor:pointer}
+.wcv-btn--primary{background-color:#4caf50;color:#fff}
+
