@@ -11,7 +11,7 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Valide em tempo real se o telefone do checkout possui WhatsApp e alerte o cliente caso não tenha.
 
 == Description ==
-Este plugin verifica, via API da sua plataforma de WhatsApp, se o número informado no checkout é WhatsApp. Caso não seja, exibe um aviso e pede confirmação do cliente.
+Este plugin verifica, via API Evolution, se o número informado no checkout é WhatsApp. Caso não seja, exibe um aviso e pede confirmação do cliente.
 
 == Features ==
 - Validação em tempo real via AJAX

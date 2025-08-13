@@ -132,8 +132,9 @@ class WCV_Validator {
          */
         $args = apply_filters( 'wcv_validation_request_args', $args, $phone );
 
-        // Cache layer to reduce API calls
-        $cache_key = 'wcv_whatsapp_' . md5( $phone );
+        // Cache layer to reduce API calls (salt rotates on settings change)
+        $salt      = (string) get_option( 'wcv_cache_salt', '' );
+        $cache_key = 'wcv_whatsapp_' . md5( $salt . '|' . $phone );
         $cached    = get_transient( $cache_key );
         if ( false !== $cached ) {
             wp_send_json_success( $cached );

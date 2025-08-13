@@ -72,6 +72,9 @@ function wcv_activate() {
     if ( get_option( 'wcv_intl_prefix', '' ) === '' ) {
         update_option( 'wcv_intl_prefix', '55' );
     }
+    if ( ! get_option( 'wcv_cache_salt' ) ) {
+        update_option( 'wcv_cache_salt', (string) time() );
+    }
 }
 register_activation_hook( __FILE__, 'wcv_activate' );
 
@@ -138,3 +141,36 @@ add_action( 'before_woocommerce_init', function () {
 		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', __FILE__, true );
 	}
 } );
+
+/**
+ * Admin notice quando faltam configurações obrigatórias.
+ */
+function wcv_admin_missing_config_notice() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
+    }
+    $screen = function_exists( 'get_current_screen' ) ? get_current_screen() : null;
+    // Mostra em telas de plugins e configurações
+    if ( $screen && ! in_array( $screen->id, array( 'plugins', 'settings_page_whatsapp-checkout-validation' ), true ) ) {
+        // Ainda assim exibe globalmente para garantir visibilidade
+    }
+    $api_url  = get_option( 'wcv_api_url', '' );
+    $api_key  = get_option( 'wcv_api_key', '' );
+    $instance = get_option( 'wcv_instance_name', '' );
+    if ( empty( $api_url ) || empty( $api_key ) || empty( $instance ) ) {
+        $settings_url = admin_url( 'admin.php?page=whatsapp-checkout-validation' );
+        echo '<div class="notice notice-warning"><p>' . wp_kses_post( sprintf( __( 'Validação WhatsApp: configure a URL, Chave e Instância da API para habilitar a validação. <a href="%s">Abrir configurações</a>.', 'whatsapp-checkout-validation' ), esc_url( $settings_url ) ) ) . '</p></div>';
+    }
+}
+add_action( 'admin_notices', 'wcv_admin_missing_config_notice' );
+
+/**
+ * Ao atualizar configurações críticas, rotaciona o salt do cache.
+ */
+function wcv_bump_cache_salt() {
+    update_option( 'wcv_cache_salt', (string) time() );
+}
+add_action( 'update_option_wcv_api_url', 'wcv_bump_cache_salt' );
+add_action( 'update_option_wcv_api_key', 'wcv_bump_cache_salt' );
+add_action( 'update_option_wcv_instance_name', 'wcv_bump_cache_salt' );
+add_action( 'update_option_wcv_intl_prefix', 'wcv_bump_cache_salt' );
