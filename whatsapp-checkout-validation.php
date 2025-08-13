@@ -90,3 +90,43 @@ add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'wcv_plugin_ac
  * Clean up on uninstall via uninstall.php
  * Kept empty here to document the uninstall flow.
  */
+
+/**
+ * ===== AUTO-UPDATE VIA GITHUB (plugin-update-checker) =====
+ */
+function wcv_init_auto_updater() {
+	// Define o repositório GitHub deste plugin (org/repo)
+	if ( ! defined( 'WCV_GITHUB_REPO' ) ) {
+		define( 'WCV_GITHUB_REPO', 'RelaxSolucoes/whatsapp-checkout-validation' );
+	}
+
+	// Carrega a lib somente se ainda não tiver sido carregada por outro plugin
+	if ( ! class_exists( 'YahnisElsts\\PluginUpdateChecker\\v5\\PucFactory' ) ) {
+		// Primeiro tenta na própria pasta deste plugin
+		$local_lib = WCV_PLUGIN_DIR . 'lib/plugin-update-checker/plugin-update-checker.php';
+		if ( file_exists( $local_lib ) ) {
+			require_once $local_lib;
+		} else {
+			// Como fallback, tenta usar a cópia do outro plugin se existir
+			$other = WP_PLUGIN_DIR . '/wp-whatsevolution/lib/plugin-update-checker/plugin-update-checker.php';
+			if ( file_exists( $other ) ) {
+				require_once $other;
+			}
+		}
+	}
+
+	if ( class_exists( '\\YahnisElsts\\PluginUpdateChecker\\v5\\PucFactory' ) ) {
+		$updateChecker = \YahnisElsts\PluginUpdateChecker\v5\PucFactory::buildUpdateChecker(
+			'https://github.com/' . WCV_GITHUB_REPO,
+			__FILE__,
+			'whatsapp-checkout-validation'
+		);
+
+		// Opcional: checagem manual via hook admin
+		// add_action( 'admin_init', function() use ( $updateChecker ) { $updateChecker->checkForUpdates(); } );
+	}
+}
+add_action( 'init', 'wcv_init_auto_updater' );
+/**
+ * ===== FIM AUTO-UPDATE =====
+ */
