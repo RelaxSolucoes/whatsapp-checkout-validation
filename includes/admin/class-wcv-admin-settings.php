@@ -234,19 +234,21 @@ class WCV_Admin_Settings {
         ?>
         <div class="wrap">
             <h1><?php esc_html_e( 'Configurações de Validação de WhatsApp no Checkout', 'whatsapp-checkout-validation' ); ?></h1>
-            <div style="margin:16px 0; padding:16px; border-radius:8px; background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%); color:#0b253a;">
-                <div style="background:rgba(255,255,255,0.95); padding:16px; border-radius:6px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div style="width:40px; height:40px; border-radius:50%; background:#4facfe; color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px;">📣</div>
-                        <div>
-                            <strong><?php esc_html_e( 'Não possui Evolution API?', 'whatsapp-checkout-validation' ); ?></strong>
-                            <div style="font-size:13px; opacity:.9;">&nbsp;<?php esc_html_e( 'Conheça nossa solução completa de automação WhatsApp para WooCommerce.', 'whatsapp-checkout-validation' ); ?></div>
-                        </div>
+            <div style="border:1px solid #16a34a; background:#f0fff4; padding:20px; border-radius:10px; box-shadow:0 6px 16px rgba(0,128,0,0.08); display:flex; align-items:center; justify-content:space-between; gap:24px;">
+                <div style="display:flex; align-items:flex-start; gap:14px;">
+                    <div style="font-size:28px; line-height:1; color:#e11d48;">❌</div>
+                    <div>
+                        <h3 style="margin:0 0 8px; font-size:18px; color:#0f172a;">Não tem uma API Evolution?</h3>
+                        <p style="margin:0; color:#0f172a; opacity:.9;">
+                            <span style="margin-right:8px;">🎯</span>Envie mensagens automatizadas para seus clientes em minutos!<br/>
+                            <span style="margin-right:8px;">✨</span>Ative sua instância agora e aproveite todos os recursos premium do Whats Evolution.<br/>
+                            <span style="margin-right:8px;">💡</span><strong>Dica:</strong> Use a aba "🚀 Teste Grátis" para configuração automática em 1-click!
+                        </p>
                     </div>
-                    <a href="https://relaxsolucoes.online" target="_blank" rel="noopener noreferrer" class="button button-primary" style="background:#4caf50; border:none; box-shadow:none;">
-                        <?php esc_html_e( 'Saiba mais', 'whatsapp-checkout-validation' ); ?>
-                    </a>
                 </div>
+                <a href="https://whats-evolution.vercel.app/" target="_blank" rel="noopener noreferrer" style="background:#16a34a; color:#fff; border-radius:8px; padding:12px 18px; text-decoration:none; display:inline-flex; align-items:center; gap:8px; box-shadow:0 8px 20px rgba(16,185,129,.25);">
+                    <span>🚀</span> <strong>Teste Grátis Agora Mesmo!</strong>
+                </a>
             </div>
             <form action="options.php" method="post">
                 <?php
