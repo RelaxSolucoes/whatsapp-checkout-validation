@@ -52,6 +52,38 @@ class WCV_Admin_Settings {
      * Register plugin settings.
      */
     public function register_settings() {
+        // Main toggles
+        register_setting(
+            'wcv_settings_group',
+            'wcv_checkout_enabled',
+            array( 'sanitize_callback' => array( $this, 'sanitize_yes_no' ) )
+        );
+        register_setting(
+            'wcv_settings_group',
+            'wcv_checkout_show_modal',
+            array( 'sanitize_callback' => array( $this, 'sanitize_yes_no' ) )
+        );
+        // Messages
+        register_setting(
+            'wcv_settings_group',
+            'wcv_validation_success_msg',
+            array( 'sanitize_callback' => 'sanitize_text_field' )
+        );
+        register_setting(
+            'wcv_settings_group',
+            'wcv_validation_error_msg',
+            array( 'sanitize_callback' => 'sanitize_text_field' )
+        );
+        register_setting(
+            'wcv_settings_group',
+            'wcv_modal_title',
+            array( 'sanitize_callback' => 'sanitize_text_field' )
+        );
+        register_setting(
+            'wcv_settings_group',
+            'wcv_modal_button_text',
+            array( 'sanitize_callback' => 'sanitize_text_field' )
+        );
         register_setting(
             'wcv_settings_group',
             'wcv_api_url',
@@ -87,6 +119,50 @@ class WCV_Admin_Settings {
             'whatsapp-checkout-validation'
         );
 
+        add_settings_field(
+            'wcv_checkout_enabled',
+            __( 'Ativar validação no checkout', 'whatsapp-checkout-validation' ),
+            array( $this, 'checkout_enabled_callback' ),
+            'whatsapp-checkout-validation',
+            'wcv_settings_section'
+        );
+        add_settings_field(
+            'wcv_checkout_show_modal',
+            __( 'Exibir modal de confirmação', 'whatsapp-checkout-validation' ),
+            array( $this, 'checkout_show_modal_callback' ),
+            'whatsapp-checkout-validation',
+            'wcv_settings_section'
+        );
+        add_settings_field(
+            'wcv_validation_success_msg',
+            __( 'Mensagem de sucesso', 'whatsapp-checkout-validation' ),
+            array( $this, 'validation_success_msg_callback' ),
+            'whatsapp-checkout-validation',
+            'wcv_settings_section'
+        );
+        add_settings_field(
+            'wcv_validation_error_msg',
+            __( 'Mensagem de erro', 'whatsapp-checkout-validation' ),
+            array( $this, 'validation_error_msg_callback' ),
+            'whatsapp-checkout-validation',
+            'wcv_settings_section'
+        );
+        add_settings_field(
+            'wcv_modal_title',
+            __( 'Título do modal', 'whatsapp-checkout-validation' ),
+            array( $this, 'modal_title_callback' ),
+            'whatsapp-checkout-validation',
+            'wcv_settings_section'
+        );
+        add_settings_field(
+            'wcv_modal_button_text',
+            __( 'Texto do botão do modal', 'whatsapp-checkout-validation' ),
+            array( $this, 'modal_button_text_callback' ),
+            'whatsapp-checkout-validation',
+            'wcv_settings_section'
+        );
+
+        // Existing fields
         add_settings_field(
             'wcv_api_url',
             __( 'URL da API', 'whatsapp-checkout-validation' ),
@@ -202,6 +278,20 @@ class WCV_Admin_Settings {
         ?>
         <div class="wrap">
             <h1><?php esc_html_e( 'Configurações de Validação de WhatsApp no Checkout', 'whatsapp-checkout-validation' ); ?></h1>
+            <div style="margin:16px 0; padding:16px; border-radius:8px; background:linear-gradient(135deg,#4facfe 0%,#00f2fe 100%); color:#0b253a;">
+                <div style="background:rgba(255,255,255,0.95); padding:16px; border-radius:6px; display:flex; align-items:center; justify-content:space-between; gap:16px;">
+                    <div style="display:flex; align-items:center; gap:12px;">
+                        <div style="width:40px; height:40px; border-radius:50%; background:#4facfe; color:#fff; display:flex; align-items:center; justify-content:center; font-size:20px;">📣</div>
+                        <div>
+                            <strong><?php esc_html_e( 'Não possui Evolution API?', 'whatsapp-checkout-validation' ); ?></strong>
+                            <div style="font-size:13px; opacity:.9;">&nbsp;<?php esc_html_e( 'Conheça nossa solução completa de automação WhatsApp para WooCommerce.', 'whatsapp-checkout-validation' ); ?></div>
+                        </div>
+                    </div>
+                    <a href="https://relaxsolucoes.online" target="_blank" rel="noopener noreferrer" class="button button-primary" style="background:#4caf50; border:none; box-shadow:none;">
+                        <?php esc_html_e( 'Saiba mais', 'whatsapp-checkout-validation' ); ?>
+                    </a>
+                </div>
+            </div>
             <form action="options.php" method="post">
                 <?php
                 settings_fields( 'wcv_settings_group' );
@@ -246,6 +336,63 @@ class WCV_Admin_Settings {
             return get_option( 'wcv_api_key' );
         }
         return $value;
+    }
+
+    public function checkout_enabled_callback() {
+        $val = get_option( 'wcv_checkout_enabled', 'yes' );
+        printf(
+            '<label><input type="checkbox" name="wcv_checkout_enabled" value="yes" %s> %s</label>',
+            checked( $val, 'yes', false ),
+            esc_html__( 'Validar número de WhatsApp no checkout', 'whatsapp-checkout-validation' )
+        );
+    }
+
+    public function checkout_show_modal_callback() {
+        $val = get_option( 'wcv_checkout_show_modal', 'yes' );
+        printf(
+            '<label><input type="checkbox" name="wcv_checkout_show_modal" value="yes" %s> %s</label>',
+            checked( $val, 'yes', false ),
+            esc_html__( 'Exibir modal de confirmação quando não for WhatsApp', 'whatsapp-checkout-validation' )
+        );
+    }
+
+    public function validation_success_msg_callback() {
+        $val = get_option( 'wcv_validation_success_msg', __( '✓ Número de WhatsApp válido', 'whatsapp-checkout-validation' ) );
+        printf(
+            '<input type="text" id="wcv_validation_success_msg" name="wcv_validation_success_msg" value="%s" class="regular-text" />',
+            esc_attr( $val )
+        );
+    }
+
+    public function validation_error_msg_callback() {
+        $val = get_option( 'wcv_validation_error_msg', __( '⚠ Este número não possui WhatsApp', 'whatsapp-checkout-validation' ) );
+        printf(
+            '<input type="text" id="wcv_validation_error_msg" name="wcv_validation_error_msg" value="%s" class="regular-text" />',
+            esc_attr( $val )
+        );
+    }
+
+    public function modal_title_callback() {
+        $val = get_option( 'wcv_modal_title', __( 'Atenção!', 'whatsapp-checkout-validation' ) );
+        printf(
+            '<input type="text" id="wcv_modal_title" name="wcv_modal_title" value="%s" class="regular-text" />',
+            esc_attr( $val )
+        );
+    }
+
+    public function modal_button_text_callback() {
+        $val = get_option( 'wcv_modal_button_text', __( 'Prosseguir sem WhatsApp', 'whatsapp-checkout-validation' ) );
+        printf(
+            '<input type="text" id="wcv_modal_button_text" name="wcv_modal_button_text" value="%s" class="regular-text" />',
+            esc_attr( $val )
+        );
+    }
+
+    /**
+     * Sanitize yes/no checkbox values.
+     */
+    public function sanitize_yes_no( $value ) {
+        return ( 'yes' === $value ) ? 'yes' : 'no';
     }
 
     /**

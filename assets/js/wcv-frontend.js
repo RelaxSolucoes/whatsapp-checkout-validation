@@ -103,7 +103,9 @@
                         } else {
                             isWhatsApp = false;
                             validationResult.html('<span class="wcv-text wcv-text--warning">' + wcvData.i18n.not_whatsapp + '</span>');
-                            whatsappModal.show();
+                            if (wcvData.show_modal === 'yes') {
+                                whatsappModal.show();
+                            }
                         }
                     } else {
                         isWhatsApp = null;
@@ -124,7 +126,9 @@
         $('form.checkout').on('submit', function(e) {
             if (isWhatsApp === false && !userConfirmedNonWhatsApp) {
                 e.preventDefault();
-                whatsappModal.show();
+                if (wcvData.show_modal === 'yes') {
+                    whatsappModal.show();
+                }
                 return false;
             }
             return true;

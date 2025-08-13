@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Validação de WhatsApp no Checkout usando Evolution API
+ * Plugin Name: WP Checkout Validation
  * Plugin URI: https://github.com/RelaxSolucoes/whatsapp-checkout-validation
  * Description: Verifica em tempo real se o número de telefone no checkout possui WhatsApp.
  * Version: 1.1.0

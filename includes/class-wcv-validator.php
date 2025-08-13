@@ -49,6 +49,11 @@ class WCV_Validator {
             WCV_PLUGIN_VERSION
         );
 
+        $enabled = get_option( 'wcv_checkout_enabled', 'yes' );
+        if ( 'yes' !== $enabled ) {
+            return;
+        }
+
         wp_enqueue_script(
             'wcv-frontend',
             WCV_PLUGIN_URL . 'assets/js/wcv-frontend.js',
@@ -58,6 +63,12 @@ class WCV_Validator {
         );
 
         $intl_prefix = get_option( 'wcv_intl_prefix', '55' );
+        $show_modal      = get_option( 'wcv_checkout_show_modal', 'yes' );
+        $success_msg     = get_option( 'wcv_validation_success_msg', __( '✓ Número de WhatsApp válido', 'whatsapp-checkout-validation' ) );
+        $error_msg       = get_option( 'wcv_validation_error_msg', __( '⚠ Este número não possui WhatsApp', 'whatsapp-checkout-validation' ) );
+        $modal_title     = get_option( 'wcv_modal_title', __( 'Atenção!', 'whatsapp-checkout-validation' ) );
+        $modal_btn_text  = get_option( 'wcv_modal_button_text', __( 'Prosseguir sem WhatsApp', 'whatsapp-checkout-validation' ) );
+
         wp_localize_script(
             'wcv-frontend',
             'wcvData',
@@ -68,14 +79,15 @@ class WCV_Validator {
                 'i18n'            => array(
                     'checking'      => __( 'Verificando número...', 'whatsapp-checkout-validation' ),
                     'incomplete'    => __( 'Número de telefone incompleto', 'whatsapp-checkout-validation' ),
-                    'valid'         => __( '✓ Número de WhatsApp válido', 'whatsapp-checkout-validation' ),
-                    'not_whatsapp'  => __( '⚠ Este número não possui WhatsApp', 'whatsapp-checkout-validation' ),
+                    'valid'         => $success_msg,
+                    'not_whatsapp'  => $error_msg,
                     'unknown_error' => __( 'Não foi possível verificar o número', 'whatsapp-checkout-validation' ),
                     'ajax_error'    => __( 'Erro na verificação. Tente novamente.', 'whatsapp-checkout-validation' ),
-                    'attention'     => __( 'Atenção!', 'whatsapp-checkout-validation' ),
-                    'proceed'       => __( 'Prosseguir sem WhatsApp', 'whatsapp-checkout-validation' ),
+                    'attention'     => $modal_title,
+                    'proceed'       => $modal_btn_text,
                     'name'          => __( 'Nome', 'whatsapp-checkout-validation' ),
                 ),
+                'show_modal'      => $show_modal,
                 // Custom non-WhatsApp warning message
                 'nonwhatsapp_msg' => get_option( 'wcv_nonwhatsapp_msg', __( 'O número informado não é WhatsApp. Você não receberá a confirmação por mensagem.', 'whatsapp-checkout-validation' ) ),
             )
