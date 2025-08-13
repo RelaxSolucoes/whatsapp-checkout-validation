@@ -1,17 +1,17 @@
 <?php
 /**
- * Plugin Name: Validação de WhatsApp no Checkout
- * Plugin URI: https://relaxsolucoes.com.br/
+ * Plugin Name: Validação de WhatsApp no Checkout usando Evolution API
+ * Plugin URI: https://github.com/RelaxSolucoes/whatsapp-checkout-validation
  * Description: Verifica em tempo real se o número de telefone no checkout possui WhatsApp.
  * Version: 1.1.0
  * Author: Relax Soluções
- * Author URI: https://relaxsolucoes.com.br/
+ * Author URI: https://relaxsolucoes.online/
  * Requires at least: 5.6
  * Requires PHP: 7.4
  * WC requires at least: 5.0
  * WC tested up to: 8.9
- * Text Domain: whatsapp-checkout-validation
  * Domain Path: /languages
+ * GitHub Plugin URI: RelaxSolucoes/whatsapp-checkout-validation
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
