@@ -32,6 +32,7 @@ class WCV_Admin_Settings {
         add_action( 'admin_menu', array( $this, 'add_admin_menu' ) );
         add_action( 'admin_init', array( $this, 'register_settings' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_assets' ) );
+        add_action( 'admin_post_wcv_test_connection', array( $this, 'handle_test_connection' ) );
     }
 
     /**
@@ -247,6 +248,7 @@ class WCV_Admin_Settings {
      * Render the settings page.
      */
     public function settings_page() {
+        $connection_status = $this->is_configured() ? $this->check_connection() : null;
         ?>
         <div class="wrap wpwevo-panel" style="max-width: none;">
             <h1>⚙️ <?php esc_html_e( 'Validação de WhatsApp no Checkout - Configurações', 'whatsapp-checkout-validation' ); ?></h1>
@@ -258,7 +260,7 @@ class WCV_Admin_Settings {
                     <p class="wpwevo-cta-description">
                         <span class="wpwevo-cta-emoji">🎯</span> Envie mensagens automatizadas para seus clientes em minutos!<br>
                         <span class="wpwevo-cta-emoji">✨</span> Ative sua instância agora e aproveite todos os recursos premium do Whats Evolution.<br>
-                        <span class="wpwevo-cta-emoji">🧭</span> Clique em <strong>"🚀 Teste Grátis Agora Mesmo!"</strong>, crie sua conta e receba a <strong>URL da API</strong>, <strong>Chave da API</strong> e <strong>Nome da Instância</strong>. Depois, cole nas configurações deste plugin e teste grátis por <strong>7 dias</strong>.
+                        <span class="wpwevo-cta-emoji">🧭</span> Clique em <strong>"🚀 Teste Grátis Agora Mesmo!"</strong>, crie sua conta e receba suas <strong>Credenciais</strong>. Cole nas configurações e teste grátis por <strong>7 dias</strong>.
                     </p>
                 </div>
                 <a href="https://whats-evolution.vercel.app/"
@@ -266,16 +268,138 @@ class WCV_Admin_Settings {
                     <span class="wpwevo-cta-emoji">🚀</span> Teste Grátis Agora Mesmo!
                 </a>
             </div>
-            <form action="options.php" method="post">
-                <?php
-                settings_fields( 'wcv_settings_group' );
-                settings_errors( 'wcv_settings_group' );
-                do_settings_sections( 'whatsapp-checkout-validation' );
-                submit_button();
-                ?>
+            <form action="options.php" method="post" id="wcv-settings-form">
+                <?php settings_fields( 'wcv_settings_group' ); ?>
+
+                <!-- Card: Configuração da Evolution API -->
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; padding: 0; box-shadow: 0 4px 15px rgba(102,126,234,0.2); overflow: hidden; margin-top:20px;">
+                    <div style="background: rgba(255,255,255,0.95); margin: 2px; border-radius: 10px; padding: 20px;">
+                        <div style="display:flex; align-items:center; margin-bottom:20px;">
+                            <div style="background:#667eea; color:#fff; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; margin-right:15px;">🔗</div>
+                            <h3 style="margin:0; color:#2d3748; font-size:18px;"><?php esc_html_e( 'Configuração da Evolution API', 'whatsapp-checkout-validation' ); ?></h3>
+                        </div>
+
+                        <div style="display:grid; gap:20px;">
+                            <div style="background:#f7fafc; padding:15px; border-radius:8px; border-left:4px solid #667eea;">
+                                <label style="display:block; margin-bottom:8px; font-weight:500; color:#2d3748;">🌐 <?php esc_html_e( 'URL da API', 'whatsapp-checkout-validation' ); ?></label>
+                                <input type="url" name="wcv_api_url" value="<?php echo esc_attr( get_option( 'wcv_api_url', '' ) ); ?>" style="width:100%; padding:10px; border:2px solid #e2e8f0; border-radius:6px; font-size:14px;" placeholder="https://sua-api.exemplo.com" required />
+                                <p style="margin:8px 0 0; color:#4a5568; font-size:12px;"><?php esc_html_e( 'URL completa onde a Evolution API está instalada', 'whatsapp-checkout-validation' ); ?></p>
+                            </div>
+                            <div style="background:#f7fafc; padding:15px; border-radius:8px; border-left:4px solid #667eea;">
+                                <label style="display:block; margin-bottom:8px; font-weight:500; color:#2d3748;">🔑 <?php esc_html_e( 'API Key', 'whatsapp-checkout-validation' ); ?></label>
+                                <input type="text" name="wcv_api_key" value="<?php echo esc_attr( get_option( 'wcv_api_key', '' ) ); ?>" style="width:100%; padding:10px; border:2px solid #e2e8f0; border-radius:6px; font-size:14px;" placeholder="Sua chave de API" required />
+                                <p style="margin:8px 0 0; color:#4a5568; font-size:12px;"><?php esc_html_e( 'Chave de API gerada nas configurações da Evolution API', 'whatsapp-checkout-validation' ); ?></p>
+                            </div>
+                            <div style="background:#f7fafc; padding:15px; border-radius:8px; border-left:4px solid #667eea;">
+                                <label style="display:block; margin-bottom:8px; font-weight:500; color:#2d3748;">📱 <?php esc_html_e( 'Nome da Instância', 'whatsapp-checkout-validation' ); ?></label>
+                                <input type="text" name="wcv_instance_name" value="<?php echo esc_attr( get_option( 'wcv_instance_name', '' ) ); ?>" style="width:100%; padding:10px; border:2px solid #e2e8f0; border-radius:6px; font-size:14px;" placeholder="Nome da sua instância" required />
+                                <p style="margin:8px 0 0; color:#4a5568; font-size:12px;"><?php esc_html_e( 'Nome da instância criada na Evolution API', 'whatsapp-checkout-validation' ); ?></p>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:20px; display:flex; gap:10px; align-items:center;">
+                            <button type="submit" class="button button-primary" style="background: linear-gradient(135deg,#667eea 0%, #764ba2 100%); border:none; padding:12px 24px; font-size:14px; border-radius:8px; color:#fff; cursor:pointer; box-shadow:0 4px 15px rgba(102,126,234,0.3);">
+                                💾 <?php esc_html_e( 'Salvar Configurações', 'whatsapp-checkout-validation' ); ?>
+                            </button>
+                            <?php if ( $this->is_configured() ) : ?>
+                                <a href="<?php echo esc_url( wp_nonce_url( admin_url( 'admin-post.php?action=wcv_test_connection' ), 'wcv_test_connection' ) ); ?>" style="background:#4a5568; color:#fff; text-decoration:none; padding:12px 20px; border-radius:8px; font-size:14px;">
+                                    🧪 <?php esc_html_e( 'Testar Conexão', 'whatsapp-checkout-validation' ); ?>
+                                </a>
+                            <?php endif; ?>
+                        </div>
+
+                        <?php if ( $connection_status ) : ?>
+                            <div style="margin-top:15px; padding:12px; border-radius:8px; background: <?php echo $connection_status['success'] ? '#d4edda' : '#f8d7da'; ?>; border:1px solid <?php echo $connection_status['success'] ? '#c3e6cb' : '#f5c6cb'; ?>; color: <?php echo $connection_status['success'] ? '#155724' : '#721c24'; ?>;">
+                                <span style="font-size:16px; margin-right:8px;"><?php echo $connection_status['success'] ? '✅' : '❌'; ?></span>
+                                <?php echo esc_html( $connection_status['message'] ); ?>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
+                <!-- Card: Personalização da Validação (opcional) -->
+                <div style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); border-radius: 12px; padding: 0; box-shadow: 0 4px 15px rgba(168,237,234,0.2); overflow: hidden; margin-top:20px;">
+                    <div style="background: rgba(255,255,255,0.95); margin: 2px; border-radius: 10px; padding: 20px;">
+                        <div style="display:flex; align-items:center; margin-bottom:15px;">
+                            <div style="background:#a8edea; color:#2d3748; width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:20px; margin-right:15px;">💬</div>
+                            <h3 style="margin:0; color:#2d3748; font-size:18px;"><?php esc_html_e( 'Personalização da Validação', 'whatsapp-checkout-validation' ); ?></h3>
+                        </div>
+                        <div style="display:grid; gap:15px;">
+                            <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                                <input type="checkbox" name="wcv_checkout_enabled" value="yes" <?php checked( get_option( 'wcv_checkout_enabled', 'yes' ), 'yes' ); ?> style="transform:scale(1.1);"/>
+                                <strong><?php esc_html_e( 'Ativar validação no checkout', 'whatsapp-checkout-validation' ); ?></strong>
+                            </label>
+                            <label style="display:flex; align-items:center; gap:10px; cursor:pointer;">
+                                <input type="checkbox" name="wcv_checkout_show_modal" value="yes" <?php checked( get_option( 'wcv_checkout_show_modal', 'yes' ), 'yes' ); ?> style="transform:scale(1.1);"/>
+                                <strong><?php esc_html_e( 'Exibir modal de confirmação', 'whatsapp-checkout-validation' ); ?></strong>
+                            </label>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                                <div>
+                                    <label style="display:block; margin-bottom:6px; font-weight:500; color:#2d3748;">✅ <?php esc_html_e( 'Mensagem de sucesso', 'whatsapp-checkout-validation' ); ?></label>
+                                    <input type="text" name="wcv_validation_success_msg" value="<?php echo esc_attr( get_option( 'wcv_validation_success_msg', __( '✓ Número de WhatsApp válido', 'whatsapp-checkout-validation' ) ) ); ?>" style="width:100%; padding:10px; border:2px solid #e2e8f0; border-radius:6px; font-size:14px;" />
+                                </div>
+                                <div>
+                                    <label style="display:block; margin-bottom:6px; font-weight:500; color:#2d3748;">⚠️ <?php esc_html_e( 'Mensagem de erro', 'whatsapp-checkout-validation' ); ?></label>
+                                    <input type="text" name="wcv_validation_error_msg" value="<?php echo esc_attr( get_option( 'wcv_validation_error_msg', __( '⚠ Este número não possui WhatsApp', 'whatsapp-checkout-validation' ) ) ); ?>" style="width:100%; padding:10px; border:2px solid #e2e8f0; border-radius:6px; font-size:14px;" />
+                                </div>
+                            </div>
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+                                <div>
+                                    <label style="display:block; margin-bottom:6px; font-weight:500; color:#2d3748;">📝 <?php esc_html_e( 'Título do modal', 'whatsapp-checkout-validation' ); ?></label>
+                                    <input type="text" name="wcv_modal_title" value="<?php echo esc_attr( get_option( 'wcv_modal_title', __( 'Atenção!', 'whatsapp-checkout-validation' ) ) ); ?>" style="width:100%; padding:10px; border:2px solid #e2e8f0; border-radius:6px; font-size:14px;" />
+                                </div>
+                                <div>
+                                    <label style="display:block; margin-bottom:6px; font-weight:500; color:#2d3748;">🔘 <?php esc_html_e( 'Texto do botão do modal', 'whatsapp-checkout-validation' ); ?></label>
+                                    <input type="text" name="wcv_modal_button_text" value="<?php echo esc_attr( get_option( 'wcv_modal_button_text', __( 'Prosseguir sem WhatsApp', 'whatsapp-checkout-validation' ) ) ); ?>" style="width:100%; padding:10px; border:2px solid #e2e8f0; border-radius:6px; font-size:14px;" />
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:16px;">
+                            <?php submit_button( __( 'Salvar Personalizações', 'whatsapp-checkout-validation' ), 'secondary', 'submit', false, array( 'style' => 'padding:10px 16px; border-radius:6px;' ) ); ?>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
         <?php
+    }
+
+    private function is_configured() {
+        return (bool) ( get_option( 'wcv_api_url' ) && get_option( 'wcv_api_key' ) && get_option( 'wcv_instance_name' ) );
+    }
+
+    private function check_connection() {
+        $base_url = trim( (string) get_option( 'wcv_api_url', '' ) );
+        $api_key  = trim( (string) get_option( 'wcv_api_key', '' ) );
+        $instance = trim( (string) get_option( 'wcv_instance_name', '' ) );
+        if ( $base_url === '' || $api_key === '' || $instance === '' ) {
+            return null;
+        }
+        $endpoint = rtrim( $base_url, '/' ) . '/instance/connectionState/' . rawurlencode( $instance );
+        $response = wp_remote_get( $endpoint, array(
+            'timeout' => 15,
+            'headers' => array( 'apikey' => $api_key ),
+        ) );
+        if ( is_wp_error( $response ) ) {
+            return array( 'success' => false, 'message' => $response->get_error_message() );
+        }
+        $status = (int) wp_remote_retrieve_response_code( $response );
+        $body   = wp_remote_retrieve_body( $response );
+        $data   = json_decode( $body, true );
+        if ( 200 === $status && JSON_ERROR_NONE === json_last_error() && isset( $data['instance']['state'] ) ) {
+            $open = ( $data['instance']['state'] === 'open' );
+            return array( 'success' => $open, 'message' => $open ? __( 'Conexão ativa com a Evolution API.', 'whatsapp-checkout-validation' ) : __( 'Instância encontrada, porém desconectada.', 'whatsapp-checkout-validation' ) );
+        }
+        return array( 'success' => false, 'message' => __( 'Não foi possível validar a conexão.', 'whatsapp-checkout-validation' ) );
+    }
+
+    public function handle_test_connection() {
+        check_admin_referer( 'wcv_test_connection' );
+        $result = $this->check_connection();
+        $type   = ( $result && ! empty( $result['success'] ) ) ? 'success' : 'error';
+        $redirect = admin_url( 'admin.php?page=whatsapp-checkout-validation&connection=' . $type );
+        wp_safe_redirect( $redirect );
+        exit;
     }
 
     /**
