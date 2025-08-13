@@ -62,7 +62,8 @@ class WCV_Validator {
             true
         );
 
-        $intl_prefix = get_option( 'wcv_intl_prefix', '55' );
+        // Internacional prefix simplificado removido do admin; mantemos padrão BR 55 para compatibilidade
+        $intl_prefix = '55';
         $show_modal      = get_option( 'wcv_checkout_show_modal', 'yes' );
         $success_msg     = get_option( 'wcv_validation_success_msg', __( '✓ Número de WhatsApp válido', 'whatsapp-checkout-validation' ) );
         $error_msg       = get_option( 'wcv_validation_error_msg', __( '⚠ Este número não possui WhatsApp', 'whatsapp-checkout-validation' ) );
@@ -88,8 +89,7 @@ class WCV_Validator {
                     'name'          => __( 'Nome', 'whatsapp-checkout-validation' ),
                 ),
                 'show_modal'      => $show_modal,
-                // Custom non-WhatsApp warning message
-                'nonwhatsapp_msg' => get_option( 'wcv_nonwhatsapp_msg', __( 'O número informado não é WhatsApp. Você não receberá a confirmação por mensagem.', 'whatsapp-checkout-validation' ) ),
+                // Custom non-WhatsApp warning message removida; usamos mensagem de erro configurável
             )
         );
     }

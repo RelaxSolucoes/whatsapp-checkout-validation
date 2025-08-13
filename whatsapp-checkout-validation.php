@@ -69,9 +69,6 @@ function wcv_activate() {
     }
 
     // Opções padrão
-    if ( get_option( 'wcv_intl_prefix', '' ) === '' ) {
-        update_option( 'wcv_intl_prefix', '55' );
-    }
     if ( ! get_option( 'wcv_cache_salt' ) ) {
         update_option( 'wcv_cache_salt', (string) time() );
     }

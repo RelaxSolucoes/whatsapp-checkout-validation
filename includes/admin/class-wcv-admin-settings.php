@@ -100,15 +100,10 @@ class WCV_Admin_Settings {
             array( $this, 'sanitize_instance_name' )
         );
         // Country code/intl prefix
+        // Register modal message (used in CTA modal)
         register_setting(
             'wcv_settings_group',
-            'wcv_intl_prefix',
-            array( 'sanitize_callback' => array( $this, 'sanitize_intl_prefix' ) )
-        );
-        // Register customizable non-WhatsApp warning message
-        register_setting(
-            'wcv_settings_group',
-            'wcv_nonwhatsapp_msg',
+            'wcv_modal_message',
             array( 'sanitize_callback' => 'sanitize_textarea_field' )
         );
 
@@ -163,6 +158,7 @@ class WCV_Admin_Settings {
         );
 
         // Existing fields
+        // Order: API first
         add_settings_field(
             'wcv_api_url',
             __( 'URL da API', 'whatsapp-checkout-validation' ),
@@ -181,22 +177,6 @@ class WCV_Admin_Settings {
             'wcv_instance_name',
             __( 'Nome da Instância', 'whatsapp-checkout-validation' ),
             array( $this, 'instance_name_callback' ),
-            'whatsapp-checkout-validation',
-            'wcv_settings_section'
-        );
-        // Country code/intl prefix field
-        add_settings_field(
-            'wcv_intl_prefix',
-            __( 'DDD/País (prefixo internacional)', 'whatsapp-checkout-validation' ),
-            array( $this, 'intl_prefix_callback' ),
-            'whatsapp-checkout-validation',
-            'wcv_settings_section'
-        );
-        // Add field for custom non-WhatsApp warning message
-        add_settings_field(
-            'wcv_nonwhatsapp_msg',
-            __( 'Mensagem não-WhatsApp', 'whatsapp-checkout-validation' ),
-            array( $this, 'nonwhatsapp_msg_callback' ),
             'whatsapp-checkout-validation',
             'wcv_settings_section'
         );
@@ -240,36 +220,12 @@ class WCV_Admin_Settings {
         echo '<p class="description">' . esc_html__( 'Nome da instância para completar o endpoint (ex: SuaInstancia)', 'whatsapp-checkout-validation' ) . '</p>';
     }
 
-    /**
-     * Callback to render international prefix field.
-     */
-    public function intl_prefix_callback() {
-        $prefix = get_option( 'wcv_intl_prefix', '55' );
-        printf(
-            '<input type="text" id="wcv_intl_prefix" name="wcv_intl_prefix" value="%s" class="small-text" />',
-            esc_attr( $prefix )
-        );
-        echo '<p class="description">' . esc_html__( 'Código do país (ex: 55 para Brasil). Será prefixado ao número caso não esteja presente.', 'whatsapp-checkout-validation' ) . '</p>';
-    }
+    // intl_prefix removido por padronização visual e simplicidade de setup
 
     /**
      * Callback to render custom non-WhatsApp warning message field.
      */
-    public function nonwhatsapp_msg_callback() {
-        $msg        = get_option( 'wcv_nonwhatsapp_msg', __( 'O número informado não é WhatsApp. Você não receberá a confirmação por mensagem.', 'whatsapp-checkout-validation' ) );
-        $validated  = get_option( 'wcv_instance_validated', false );
-        $disabled   = $validated ? '' : ' disabled';
-        printf(
-            '<textarea id="wcv_nonwhatsapp_msg" name="wcv_nonwhatsapp_msg" rows="3" class="large-text"%s>%s</textarea>',
-            $disabled,
-            esc_textarea( $msg )
-        );
-        if ( ! $validated ) {
-            echo '<p class="description">' . esc_html__( 'Valide a instância primeiro para habilitar a mensagem personalizada.', 'whatsapp-checkout-validation' ) . '</p>';
-        } else {
-            echo '<p class="description">' . esc_html__( 'Mensagem exibida quando o número não possui WhatsApp.', 'whatsapp-checkout-validation' ) . '</p>';
-        }
-    }
+    // Campo de mensagem não-WhatsApp removido; usamos apenas mensagem de erro configurável
 
     /**
      * Render the settings page.
